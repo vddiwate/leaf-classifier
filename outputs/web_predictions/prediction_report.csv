@@ -1,0 +1,16 @@
+image_name,detection_id,bbox_x,bbox_y,bbox_width,bbox_height,contour_area,bbox_area,aspect_ratio,predicted_class
+test_011.jpg,1,13,12,112,224,13907.0,25088.0,0.5,Large Leaf
+test_011.jpg,2,138,29,102,209,10932.0,21318.0,0.488,Small Leaf
+test_011.jpg,1,13,12,112,224,13907.0,25088.0,0.5,Large Leaf
+test_011.jpg,2,138,29,102,209,10932.0,21318.0,0.488,Small Leaf
+test_013.jpg,1,87,6,75,137,5710.0,10275.0,0.547,Small Leaf
+test_013.jpg,2,18,104,90,107,6199.0,9630.0,0.841,Large Leaf
+test_013.jpg,3,132,112,120,125,7579.5,15000.0,0.96,Large Leaf
+test_006.jpg,1,94,8,131,74,4060.0,9694.0,1.77,Large Leaf
+test_006.jpg,2,1,29,83,81,4193.0,6723.0,1.025,Large Leaf
+test_006.jpg,3,108,86,71,92,2983.5,6532.0,0.772,Small Leaf
+test_006.jpg,4,186,86,55,105,2994.0,5775.0,0.524,Small Leaf
+test_006.jpg,5,31,136,97,47,2511.5,4559.0,2.064,Small Leaf
+test_006.jpg,6,1,172,67,77,3819.5,5159.0,0.87,Large Leaf
+test_006.jpg,7,95,179,87,44,2107.5,3828.0,1.977,Small Leaf
+test_006.jpg,8,155,211,81,38,2283.5,3078.0,2.132,Small Leaf

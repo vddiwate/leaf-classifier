@@ -1,0 +1,17 @@
+# Core Computer Vision & Numerical Computing
+opencv-python>=4.8.0.76
+numpy>=1.24.3
+
+# Configuration & Data Validation / Utilities
+pyyaml>=6.0.1
+pydantic>=2.4.2
+pandas>=2.0.3
+requests>=2.31.0
+
+# Evaluation, Statistical Modeling & Plotting
+scikit-learn>=1.3.0
+matplotlib>=3.7.2
+
+# Testing & Quality Assurance
+pytest>=7.4.0
+pytest-cov>=4.1.0

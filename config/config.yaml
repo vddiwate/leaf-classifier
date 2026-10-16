@@ -1,0 +1,77 @@
+system:
+  random_seed: 42
+  log_level: "INFO"
+  log_dir: "logs"
+  log_file_name: "leafy_cv.log"
+
+data:
+  zip_path: "data/leafy_vegetable_dataset.zip"
+  allowed_extensions: [".jpg", ".jpeg", ".png", ".bmp", ".tiff"]
+  min_resolution: [50, 50]  # [min_width, min_height]
+
+preprocessing:
+  target_width: 256          # Normalized width for leaf crops
+  blur_kernel: [5, 5]        # Positive odd integers for Gaussian blur
+  blur_sigma: 0.0            # 0 means auto-computed from kernel size
+  apply_clahe: false         # Illumination correction (CLAHE on Value channel)
+  clahe_clip_limit: 2.0
+  clahe_grid_size: [8, 8]
+
+segmentation:
+  # Primary Green Foliage HSV Bounds [H: 0-180, S: 0-255, V: 0-255]
+  # Tuned lower H to 28 and S to 40 to cleanly reject brown wooden tables/cutting boards (H: 10-25)
+  green_hsv_lower: [28, 40, 40]
+  green_hsv_upper: [85, 255, 255]
+
+  # Secondary Yellow Range: Disabled by default to prevent brown wood / soil false positives.
+  # If enabled, uses high Saturation (>=90) to only capture vivid yellow chlorosis, rejecting wood.
+  include_yellow_tones: false
+  yellow_hsv_lower: [22, 90, 60]
+  yellow_hsv_upper: [27, 255, 255]
+
+  # Decoupled Morphological Operations
+  morph_kernel_shape: "MORPH_ELLIPSE"  # MORPH_ELLIPSE, MORPH_RECT, MORPH_CROSS
+  open_kernel_size: [3, 3]             # 3x3 gently cleans noise specks without eroding thin leaf stems
+  close_kernel_size: [5, 5]            # 5x5 bridges leaf veins and seals interior shadows
+  open_iterations: 1
+  close_iterations: 1
+  morph_kernel_size: [5, 5]            # Fallback / backward-compatibility default
+
+  # Contour Filtering & Cluster Detection
+  min_contour_area_px: 250.0           # Discard specks / noise smaller than this
+  max_area_ratio: 0.95                 # Discard background artifacts (>95% frame)
+  cluster_solidity_threshold: 0.85     # Regions with solidity < 0.85 have leaf notches (merged cluster)
+  cluster_area_threshold_px: 25000.0   # Regions >= 25k px indicate multi-leaf foliage mass
+
+  # Watershed Instance Segmentation (Splits touching / overlapping leaves into individual instances)
+  enable_watershed: true
+  watershed_dist_threshold_ratio: 0.45  # Threshold ratio of max distance transform to seed leaf centers
+  watershed_bg_dilate_iterations: 2     # Dilate clean mask to determine sure background boundary
+
+classification:
+  # Size classification mode:
+  # 'adaptive': Naturally compares leaves within the same image (Small Leaf if area < 80% of largest leaf)
+  # 'fixed': Uses absolute size_threshold_px cutoff
+  mode: "adaptive"
+  relative_ratio_threshold: 0.80       # Leaf is Small if its area is < 80% of the largest leaf in the frame
+  min_large_leaf_area_px: 3500.0       # Minimum area required for any leaf to be called Large (avoids baby leaves being called large)
+  size_threshold_px: 6500.0            # Baseline cutoff for solitary single leaves
+  small_label: "Small Leaf"
+  large_label: "Large Leaf"
+  area_metric: "contour_area"          # 'contour_area' or 'bbox_area'
+  min_leaf_area_px: 250.0              # Discard tiny fragments & background noise specks (<250px)
+  suppress_duplicates: true            # Filter duplicate / heavily overlapping fragment detections
+  duplicate_iou_threshold: 0.5         # Bounding box IoU threshold for duplicate suppression
+  # Distinct border & badge colors for Small vs Large leaves (BGR format)
+  small_color_bgr: [255, 215, 0]       # Vivid Cyan for Small Leaf border & title badge
+  large_color_bgr: [50, 225, 50]       # Vivid Lime Green for Large Leaf border & title badge
+
+paths:
+  output_dir: "outputs"
+  sample_views_dir: "outputs/sample_views"
+  segmentation_dir: "outputs/segmentation_views"
+  classification_dir: "outputs/classification_views"
+  classification_csv: "outputs/leaf_classification_report.csv"
+  evaluation_dir: "outputs/evaluation"
+  evaluation_csv: "outputs/evaluation/unseen_evaluation_review.csv"
+  evaluation_contact_sheet: "outputs/evaluation/unseen_test_contact_sheet.jpg"

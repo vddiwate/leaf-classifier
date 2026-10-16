@@ -1,0 +1,16 @@
+image_name,actual_leaf_count,detected_instance_count,small_leaf_count,large_leaf_count,missed_leaves,merged_instances,duplicate_detections,background_false_positives,classification_review,notes
+test_001.jpg,1,1,0,1,0,0,0,0,Correct: Solitary mature leaf accurately bounded and classified as Large Leaf.,Single leaf baseline; clean neutral background; boundary tightness verified.
+test_002.jpg,,2,1,1,,1,0,0,Plausible: Dominant foliage mass is Large Leaf; lower stem/leaf fragment is Small Leaf.,Wood background correctly rejected without false positives; main overlapping foliage mass treated as single unit.
+test_003.jpg,3,3,2,1,0,0,0,0,Correct: 1 dominant Large Leaf (9098px) and 2 smaller side leaves (5903px & 5745px).,"3 distinct leaves separated cleanly via watershed; adaptive natural ratio properly classifies 1 Large, 2 Small."
+test_004.jpg,,8,7,1,,1,0,0,Plausible: Central dense rosette is Large Leaf; 7 peripheral leaves/shoots are Small Leaves.,Central rosette foliage merged due to continuous overlapping leaf layers; soil texture cleanly rejected.
+test_005.jpg,1,1,0,1,0,0,0,0,Correct: Solitary leaf accurately classified as Large Leaf.,Clean solitary leaf segmentation; boundary fits leaf margin tightly.
+test_006.jpg,,8,5,3,,0,0,0,Plausible: 8 seedling clusters segmented; relative comparison identifies 5 larger and 3 smaller units.,Seedling tray with multiple emerging leaves; watershed splits touching leaves into 8 distinct units.
+test_007.jpg,,2,1,1,,1,0,0,Plausible: 1 main large foliage mass (24638px) and 1 smaller peripheral region (4442px).,Overlapping mature spinach foliage; partial occlusion between stacked leaves.
+test_008.jpg,1,1,0,1,0,0,0,0,Correct: Solitary mature leaf accurately classified as Large Leaf.,Clear solitary leaf; excellent boundary alignment.
+test_009.jpg,1,1,0,1,0,0,0,0,Correct: Solitary oversized mature leaf accurately classified as Large Leaf.,Single large leaf filling majority of frame; zero false positive detections.
+test_010.jpg,,4,3,1,,0,0,0,Plausible: 1 dominant Large Leaf (14541px) and 3 smaller fragments/leaves.,Dark wood surface rejected without false positives; 4 discrete regions extracted.
+test_011.jpg,2,2,1,1,0,0,0,0,Correct: 2 mature leaves of comparable sizes (13907px & 10932px) both classified as Large Leaf.,78.6% relative ratio properly recognizes both as mature Large Leaves rather than forcing one into Small.
+test_012.jpg,,5,4,1,,1,0,0,Plausible: 1 central Large Leaf mass (31470px) alongside 4 smaller leaf detections.,Overlapping field foliage; soil and shadow noise successfully filtered by min area threshold.
+test_013.jpg,3,3,1,2,0,0,0,0,"Correct: 3 distinct mature leaves of comparable size (5710px, 6199px, 7580px) all classified Large Leaf.",All 3 leaves exceed 70% of max leaf; adaptive natural comparison keeps all 3 as Large Leaves.
+test_014.jpg,2,2,1,1,0,0,0,0,Correct: 1 dominant Large Leaf (18402px) and 1 small side leaf fragment (2069px).,Clear dual leaf scenario with large size disparity (11% ratio); correctly classified as Large + Small.
+test_015.jpg,1,1,0,1,0,0,0,0,Correct: Solitary leaf on concrete ground classified as Large Leaf.,Smooth contour extraction; zero background noise from concrete pavement.
